@@ -1,0 +1,53 @@
+@page
+@model WebApplicationRazor.Pages.ProductPages.IndexModel
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Product List</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form method="get">
+    <p>
+        Search by name: <input type="text" placeholder="searchString" asp-for="SearchString" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-page="./Index" asp-route-sortOrder="@ViewData["NameSort"]">Name</a></th>
+            <th><a asp-page="./Index" asp-route-sortOrder="@ViewData["PriceSort"]">Price</a></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Product) {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("C")</td>
+            </tr>
+    }
+    </tbody>
+</table>
+@{
+    var previousPage = Model.PageNumber - 1;
+    var nextPage = Model.PageNumber + 1;
+}
+<div>
+@if(Model.hasPreviousPage)
+{
+    <a asp-page="./Index" asp-route-pageNumber="1">First</a>
+    <a asp-page="./Index" asp-route-pageNumber="@(Model.PageNumber - 1)">Previous</a>
+}
+@for(var i = 1; i <= Model.totalPages; i++)
+{
+    <a asp-page="./Index" asp-route-pageNumber="@i">@i</a>
+}
+@if(Model.hasNextPage)
+{
+    <a asp-page="./Index" asp-route-pageNumber="@(Model.PageNumber + 1)">Next</a>
+    <a asp-page="./Index" asp-route-pageNumber="@Model.totalPages">Last</a>
+}
