@@ -15,10 +15,10 @@ public class IndexModel : PageModel
         _context = context;
     }
 
-    public IList<Product> Product { get; set; } = default!;
+    //public IList<Product> Product { get; set; } = default!;
 
-    public async Task OnGetAsync()
-    {
-        Product = await _context.Products.ToListAsync();
-    }
+    //public async Task OnGetAsync()
+    //{
+    //    Product = await _context.Products.ToListAsync();
+    //}
 }
